@@ -65,13 +65,17 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Capacitor sync
-        run: npx cap sync android
+        run: pnpm cap sync android
 
       - name: Build APK
         run: cd android && ./gradlew assembleRelease
+        
+      - name: Check APK exists
+        run: |
+          ls -lh android/app/build/outputs/apk/release/
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: app-release.apk
-          path: android/app/build/outputs/apk/release/app-release.apk
+          path: android/app/build/outputs/apk/release/app-release-unsigned.apk
