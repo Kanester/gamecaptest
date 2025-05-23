@@ -2,7 +2,7 @@ name: Build Android APK
 
 on:
   push:
-    branches: [main]
+    branches: 'main'
 
 jobs:
   build-apk:
@@ -16,7 +16,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.pnpm-store
-          key: ${{ runner.os }}-pnpm-store-${{ hashFile('**/pnpm-lock.yml') }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yml') }}
 
       - name: Cache sveltekit artifacts
         uses: actions/cache@v4
@@ -24,7 +24,7 @@ jobs:
           path: |
             .svelte-kit
             node_modules/.vite
-          key: ${{ runner.os }}-vite-${{ hashFile('**/package.json') }}
+          key: ${{ runner.os }}-vite-${{ hashFiles('**/package.json') }}
           restore-keys: |
             ${{ runner.os }}-vite-
 
